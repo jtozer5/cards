@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 // Create a new type of 'deck'
 // which is a slice of strings
@@ -13,7 +17,8 @@ func newDeck() deck {
 
 	// Creates two slices of strings that include all card suits and values
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
+	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six",
+		"Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
 
 	// Loops that append the card value and suit for each card
 	for _, suit := range cardSuits {
@@ -41,6 +46,15 @@ func deal(d deck, handSize int) (deck, deck) {
 }
 
 // Save representation of the deck to a file on the harddrive
-func saveToFile() {
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
 
+func newDeckFromFile() {
+
+}
+
+// Takes a deck and converts it to a string
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
 }
