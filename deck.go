@@ -6,11 +6,13 @@ import "fmt"
 // which is a slice of strings
 type deck []string
 
+// Function that creates and returns a ceck of playing cards
 func newDeck() deck {
+	// create a new deck array
 	cards := deck{}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Jack", "Queen", "King"}
+	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
 
 	for _, suit := range cardSuits {
 		for _, value := range cardValues {
