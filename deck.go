@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -29,7 +30,6 @@ func newDeck() deck {
 
 	// return the newly created deck
 	return cards
-
 }
 
 // create a method 'print' for any deck
@@ -47,14 +47,21 @@ func deal(d deck, handSize int) (deck, deck) {
 
 // Save representation of the deck to a file on the harddrive
 func (d deck) saveToFile(filename string) error {
-	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+	return ioutil.WriteFile(filename, []byte(d.deckToString()), 0666)
 }
 
-func newDeckFromFile() {
+func newDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
 
+	if err != nil {
+		// Log error and quit program
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+	return deck(strings.Split(string(bs), ", "))
 }
 
 // Takes a deck and converts it to a string
-func (d deck) toString() string {
-	return strings.Join([]string(d), ",")
+func (d deck) deckToString() string {
+	return strings.Join([]string(d), ", ")
 }
